@@ -56,7 +56,7 @@ function App() {
       setErrorCharName(true)
     } else {
       // This statement tells it to query anilist
-      console.log(charName)
+      // console.log(charName)
       setCharNameDelay(charName)
     }
   }

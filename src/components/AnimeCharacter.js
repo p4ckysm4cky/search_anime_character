@@ -14,11 +14,11 @@ function AnimeCharacter(props) {
 
   const [expanded, setExpanded] = useState(false);
 
-  console.log(props.character)
-  console.log(props.character.name.full)
-  console.log(props.character.age)
-  console.log(props.character.image.large)
-  console.log(props.character.description)
+  // console.log(props.character)
+  // console.log(props.character.name.full)
+  // console.log(props.character.age)
+  // console.log(props.character.image.large)
+  // console.log(props.character.description)
 
 
   const handleExpandClick = () => {
