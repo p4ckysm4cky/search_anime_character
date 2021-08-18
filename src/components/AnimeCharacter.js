@@ -1,46 +1,44 @@
 import React from "react"
-import {useQuery, gql} from "@apollo/client"
+import Typography from '@material-ui/core/Typography'
+import Card from '@material-ui/core/Card';
+import { makeStyles } from '@material-ui/core/styles';
+import CardMedia from '@material-ui/core/CardMedia'
+import CardContent from '@material-ui/core/CardContent';
 
-const satania = gql`
-  query {
-    Page(page:0, perPage: 10) {
-      characters(search: "Satania") {
-        name {
-          full
-        }
-        gender
-        age
-        image {
-          large
-          medium
-        }
-        description
-        
-      }
-    }
-  }
-`
+function AnimeCharacter(props) {
+  console.log(props.character)
+  console.log(props.character.name.full)
+  console.log(props.character.age)
+  console.log(props.character.image.large)
+  console.log(props.character.description)
 
-function AnimeCharacter() {
-    const {loading, error, data} = useQuery(satania)
-    if (loading) return <p>Loading ...</p>
-    if (error) return <p>An Error has occurred</p>
-    return (
-      <div>
-        {/* <form>
-          <h1>Anime Characters</h1>
-          <input type="text"></input>
-  
-        </form> */}
-        {data.Page.characters.map((character, id) => {
-          return (
-            <p key={id}>
-              {character.name.full}
-            </p>     
-        )})}
-  
-      </div>
-    );
-  }
+
+
+
+  return (
+    <Card
+    style={{maxWidth:230}}
+    >
+      <CardMedia
+        style={{height: 345, maxWidth: 230, margin:"auto"}}
+        image={props.character.image.large}
+      />
+      <CardContent>
+        <Typography variant="h5" color="textPrimary">
+          {props.character.name.full}
+        </Typography>
+
+        <Typography variant="subtitle1">
+          {props.character.gender}
+        </Typography>
+
+        <Typography variant="subtitle2">
+          {props.character.age?`Age: ${props.character.age}`:""}
+        </Typography>
+      </CardContent>
+    </Card>
+  )
+}
+
 
 export default AnimeCharacter

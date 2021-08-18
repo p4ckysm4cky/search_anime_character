@@ -27,7 +27,6 @@ function App() {
   const [charNameDelay, setCharNameDelay] = useState("") // This exists because I don't want my queries 
                                                          // fired everytime charName is changed
   const [errorCharName, setErrorCharName] = useState(false)
-  const [displayStuff, setDisplayStuff ] = useState(false)
   const charQuery = gql`
     query {
       Page(page:0, perPage: 10) {
@@ -52,7 +51,7 @@ function App() {
   const handleSubmit = event => {
     event.preventDefault()
     setErrorCharName(false)
-    if (charName == "") {
+    if (charName === "") {
       setErrorCharName(true)
     } else {
       // This statement tells it to query anilist
@@ -76,9 +75,10 @@ function App() {
         </form> */}
         {data.Page.characters.map((character, id) => {
           return (
-            <p key={id}>
-              {character.name.full}
-            </p>     
+            <AnimeCharacter
+              key={id}
+              character={character}
+            />
         )})}
   
       </div>
