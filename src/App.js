@@ -16,17 +16,22 @@ function App() {
   const useStyles = makeStyles({
     input: {
       marginBottom: 20
+    },
+    submit: {
+      marginBottom: 10
     }
   })
   const classes = useStyles()
 
   const [charName, setCharName] = useState("")
+  const [charNameDelay, setCharNameDelay] = useState("") // This exists because I don't want my queries 
+                                                         // fired everytime charName is changed
   const [errorCharName, setErrorCharName] = useState(false)
   const [displayStuff, setDisplayStuff ] = useState(false)
   const charQuery = gql`
     query {
       Page(page:0, perPage: 10) {
-        characters(search: "${charName}") {
+        characters(search: "${charNameDelay}") {
           name {
             full
           }
@@ -44,7 +49,7 @@ function App() {
   `
 
 
-  const handleChange = event => {
+  const handleSubmit = event => {
     event.preventDefault()
     setErrorCharName(false)
     if (charName == "") {
@@ -52,12 +57,15 @@ function App() {
     } else {
       // This statement tells it to query anilist
       console.log(charName)
-      setDisplayStuff(true)
+      setCharNameDelay(charName)
     }
   }
   function DisplayCharName() {
     const {loading, error, data} = useQuery(charQuery)
-    if (loading) return <p>Loading ...</p>
+    if (loading) return (
+      <Typography variant="h5" component="p" color="primary">
+        Loading...
+      </Typography>)
     if (error) return <p>An Error has occurred</p>
     return (
       <div>
@@ -92,7 +100,7 @@ function App() {
         Search Anime Character
       </Typography>
 
-      <form noValidate autoComplete="off" onSubmit={handleChange}>
+      <form noValidate autoComplete="off" onSubmit={handleSubmit}>
         <TextField 
           onChange={(e) => setCharName(e.target.value)}
           variant="outlined"
@@ -107,11 +115,12 @@ function App() {
         type="submit"
         variant="contained"
         color="primary"
+        className={classes.submit}
         >
           Submit
         </Button>
       </form>
-      {displayStuff?<DisplayCharName/>:<p></p>}
+      {charNameDelay?<DisplayCharName/>:<span></span>}
     </Container>
     
   )
