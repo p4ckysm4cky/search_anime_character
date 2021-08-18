@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField" // User input boxes
 import { makeStyles } from "@material-ui/core" // Allows change of css in materialui
 import { useState } from "react"
+import {useQuery, gql} from "@apollo/client"
 
 
 
@@ -21,6 +22,27 @@ function App() {
 
   const [charName, setCharName] = useState("")
   const [errorCharName, setErrorCharName] = useState(false)
+  const [displayStuff, setDisplayStuff ] = useState(false)
+  const charQuery = gql`
+    query {
+      Page(page:0, perPage: 10) {
+        characters(search: "${charName}") {
+          name {
+            full
+          }
+          gender
+          age
+          image {
+            large
+            medium
+          }
+          description
+          
+        }
+      }
+    }
+  `
+
 
   const handleChange = event => {
     event.preventDefault()
@@ -30,9 +52,33 @@ function App() {
     } else {
       // This statement tells it to query anilist
       console.log(charName)
+      setDisplayStuff(true)
     }
   }
+  function DisplayCharName() {
+    const {loading, error, data} = useQuery(charQuery)
+    if (loading) return <p>Loading ...</p>
+    if (error) return <p>An Error has occurred</p>
+    return (
+      <div>
+        {/* <form>
+          <h1>Anime Characters</h1>
+          <input type="text"></input>
   
+        </form> */}
+        {data.Page.characters.map((character, id) => {
+          return (
+            <p key={id}>
+              {character.name.full}
+            </p>     
+        )})}
+  
+      </div>
+    );
+  }
+
+
+
 
   return(
     <Container>
@@ -65,6 +111,7 @@ function App() {
           Submit
         </Button>
       </form>
+      {displayStuff?<DisplayCharName/>:<p></p>}
     </Container>
     
   )
