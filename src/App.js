@@ -8,6 +8,7 @@ import { makeStyles } from "@material-ui/core" // Allows change of css in materi
 import { useState } from "react"
 import {useQuery, gql} from "@apollo/client"
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import { findByLabelText } from "@testing-library/react"
 
 
 
@@ -67,7 +68,10 @@ function App() {
       </Typography>)
     if (error) return <p>An Error has occurred</p>
     return (
-      <div>
+      <div
+        style={{display:"flex", flexWrap:"wrap", justifyContent:"center"}}
+      
+      >
         {/* <form>
           <h1>Anime Characters</h1>
           <input type="text"></input>

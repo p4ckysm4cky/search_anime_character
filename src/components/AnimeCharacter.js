@@ -27,10 +27,10 @@ function AnimeCharacter(props) {
 
   return (
     <Card
-    style={{maxWidth:230}}
+    style={{width:240}}
     >
       <CardMedia
-        style={{height: 345, maxWidth: 230, margin:"auto"}}
+        style={{height: 345, maxWidth: 240, margin:"auto"}}
         image={props.character.image.large}
       />
       <CardContent>
