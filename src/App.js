@@ -7,7 +7,7 @@ import TextField from "@material-ui/core/TextField" // User input boxes
 import { makeStyles } from "@material-ui/core" // Allows change of css in materialui
 import { useState } from "react"
 import {useQuery, gql} from "@apollo/client"
-
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
 
 
@@ -117,7 +117,7 @@ function App() {
         color="primary"
         className={classes.submit}
         >
-          Submit
+          Submit <ArrowRightIcon/>
         </Button>
       </form>
       {charNameDelay?<DisplayCharName/>:<span></span>}

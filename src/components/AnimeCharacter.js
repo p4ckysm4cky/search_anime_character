@@ -1,11 +1,19 @@
 import React from "react"
 import Typography from '@material-ui/core/Typography'
-import Card from '@material-ui/core/Card';
-import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card'
+import { makeStyles } from '@material-ui/core/styles'
 import CardMedia from '@material-ui/core/CardMedia'
-import CardContent from '@material-ui/core/CardContent';
+import CardContent from '@material-ui/core/CardContent'
+import CardActions from '@material-ui/core/CardActions'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import IconButton from '@material-ui/core/IconButton'
+import Collapse from '@material-ui/core/Collapse'
+import { useState } from "react"
 
 function AnimeCharacter(props) {
+
+  const [expanded, setExpanded] = useState(false);
+
   console.log(props.character)
   console.log(props.character.name.full)
   console.log(props.character.age)
@@ -13,7 +21,9 @@ function AnimeCharacter(props) {
   console.log(props.character.description)
 
 
-
+  const handleExpandClick = () => {
+    setExpanded(!expanded)
+  }
 
   return (
     <Card
@@ -36,6 +46,28 @@ function AnimeCharacter(props) {
           {props.character.age?`Age: ${props.character.age}`:""}
         </Typography>
       </CardContent>
+
+      <CardActions
+        style={{display:"flex"}}
+      >
+        <IconButton
+          style={{marginLeft:"auto"}}
+          onClick={handleExpandClick}
+        >
+          <ExpandMoreIcon/>
+        </IconButton>
+      </CardActions>
+
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <Typography paragraph color="textSecondary">
+            {props.character.description}
+          </Typography>
+        </CardContent>
+      </Collapse>
+
+
+
     </Card>
   )
 }
